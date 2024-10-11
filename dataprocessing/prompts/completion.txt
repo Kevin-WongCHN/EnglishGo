@@ -1,0 +1,10 @@
+ help me generate 30 questions like "If you are con_______ of something, you notice it or realize that it is happening."
+ just give the first several letters.
+ the word should focus on required words in TOFEL test and as challenging as possible, format them in the following format:
+ [
+    {"question":"","answer":""},
+    {"question":"","answer":""},
+    {"question":"","answer":""},
+    {"question":"","answer":""},
+    {"question":"","answer":""}
+ ]

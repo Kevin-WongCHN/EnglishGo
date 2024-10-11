@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ElMessage } from "element-plus";
 import { reactive, ref, watch } from "vue";
 
 const checkList = ref();
@@ -18,6 +19,11 @@ watch(checkList, (newVal, oldVal) => {
 import { useRouter } from "vue-router";
 const router=useRouter()
 const confirm=()=>{
+    const nullDom=doms.value.filter(arr=>arr[2]==null)
+    if(nullDom.length){
+        ElMessage.warning("题目分值不能为空")
+        return;
+    }
     router.push({name:"quiz",query:{data:JSON.stringify(doms.value)}})
 }
 

@@ -33,8 +33,11 @@ def tts(texts,prefix="output/listeningparaphrase/"):
                 wav).unsqueeze(0), 24000)
         except:
             torchaudio.save(f"{prefix}t{index}.wav", torch.from_numpy(wav), 24000)
-
-
+        from pydub import AudioSegment
+        sound=AudioSegment.from_file(f"{prefix}t{index}.wav")
+        sound=sound.set_frame_rate(12000)
+        sound.export(f"{prefix}t{index}.mp3", format="mp3", bitrate="128k")
+        
 
 
 def save_to_audio(filename):
@@ -70,7 +73,7 @@ def save_to_sqlite(num,filename):
         question=item["question"]
         options=item["options"]
         answer=item["answer"]
-        audio=open('output/listeningparaphrase/'+ 't'+str(index)+'.wav', 'rb').read()
+        audio=open('output/listeningparaphrase/'+ 't'+str(index)+'.mp3', 'rb').read()
         cursor.execute(
             """
             insert into listeningparaphrase(question,options,answer,audio) values(?,?,?,?)
@@ -79,6 +82,8 @@ def save_to_sqlite(num,filename):
             (question,json.dumps(options),answer,audio)
         )
     conn.commit()
+    with open(os.path.join(prefix,"readme.txt"),"w",encoding="utf-8") as f:
+        f.write(filename)
 
 
 if __name__ == "__main__":
@@ -90,5 +95,4 @@ if __name__ == "__main__":
     save_to_audio(file)
     num=3
     save_to_sqlite(num,file)
-    with open(os.path.join(prefix,"readme.txt"),"w",encoding="utf-8") as f:
-        f.write(filename)
+    

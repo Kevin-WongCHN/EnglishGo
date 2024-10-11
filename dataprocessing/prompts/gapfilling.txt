@@ -1,0 +1,13 @@
+Help me generate a challenging English gap-filling exercise suitable for TOEFL-takers.
+ The exercise should consist of 10 blanks, each with 4 options. The goal is to make it as challenging as possible by focusing on word distinction, using words from the TOEFL vocabulary list.
+ Provide the correct answer for each blank and include explanations for the chosen options.
+ The response should be formatted in the following JSON structure:
+ {
+    "material": "",
+    "options": [[]],
+    "answers": [],
+    "explanations": []
+}
+Answers should be represented as 0, 1, 2, or 3 and uniformly distributed.
+The gap-filling exercise must contain exactly 10 blanks (no more, no less).
+In the "material," replace each blank with an underscore followed by its serial number (e.g., "1", "2").

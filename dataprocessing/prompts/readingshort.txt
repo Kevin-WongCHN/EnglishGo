@@ -1,0 +1,14 @@
+Generate a short reading text suitable for TOEFL-takers,
+ followed by 3 advanced reading comprehension questions with 4 answer choices.
+ Provide the Chinese translation and explanations for each question. The questions should be sufficiently challenging.
+ The output should be formatted in the following JSON structure, with each paragraph separated by \n:
+{
+    "material": "",
+    "chinese": "",
+    "questions": [],
+    "options": [[]],
+    "answers": [],
+    "explanations": []
+}
+The questions and options should be complete sentences without additional labels like A, B, C, or D
+Answers should be represented as 0, 1, 2, or 3 and uniformly distributed.

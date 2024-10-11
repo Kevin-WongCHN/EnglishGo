@@ -1,7 +1,8 @@
 # coding=utf-8
-###################################
-# Sample a speaker from Gaussian.
-def tts(texts,filename):
+import numpy as np
+import sys
+import json
+def tts(file,filename):
     
     import ChatTTS
     import torch
@@ -18,7 +19,7 @@ def tts(texts,filename):
         top_P = 0.6,        # top P decode
         top_K = 23,         # top K decode
         manual_seed=7,
-        prompt="[speed_3]"
+        prompt="[speed_4]"
     )
 
     params_refine_text = ChatTTS.Chat.RefineTextParams(
@@ -26,10 +27,21 @@ def tts(texts,filename):
                 top_P=0.6,
                 top_K=23,
                 manual_seed=70,
-                prompt="[break_1][oral_0][laugh_0]"
+                prompt="[break_2][oral_0][laugh_0]"
     )
-    
-    print(texts)
+    data=json.load(open(file,"r",encoding="utf-8"))
+    _texts=data["material"]
+    _texts=_texts.split(".")  
+    _texts=list(map(lambda str: str.strip()+". ", _texts))
+    first=_texts[::3]
+    second=_texts[1::3]
+    third=_texts[2::3]
+    texts=["".join(pair) for pair in zip(first,second,third)]
+    if len(_texts)%3==1:
+        texts.append(_texts[-1])
+    elif len(_texts)%3==2:
+        texts.append("".join(_texts[-2:]))
+        
     wavs = chat.infer(
         texts,
         params_refine_text=params_refine_text,
@@ -41,32 +53,18 @@ def tts(texts,filename):
         torchaudio.save(f"output/listeningpassage/{filename}.wav", torch.from_numpy(final_wavs).unsqueeze(0), 24000)
     except:
         torchaudio.save(f"output/listeningpassage/{filename}.wav", torch.from_numpy(final_wavs), 24000)
-        
-if __name__ == "__main__":
-    import sys
-    import json
-    prefix="data/listeningpassage"
-    filename=sys.argv[1]
-    import os
-    file=os.path.join(prefix,filename)
-    data=json.load(open(file,"r",encoding="utf-8"))
-    texts=data["material"]
-    texts=texts.split(".")  
-    texts=list(map(lambda str: str.strip()+". ", texts))
-    first=texts[::3]
-    second=texts[1::3]
-    third=texts[2::3]
-    texts_=["".join(pair) for pair in zip(first,second,third)]
-    if len(texts)%3==1:
-        texts_.append(texts[-1])
-    elif len(texts)%3==2:
-        texts_.append("".join(texts[-2:]))
-    tts(texts_,filename)
+
+    from pydub import AudioSegment
     
+    sound=AudioSegment.from_file(f"output/listeningpassage/{filename}.wav")
+    sound=sound.set_frame_rate(12000)
+    sound.export(f"output/listeningpassage/{filename}.mp3", format="mp3", bitrate="128k")    
+    
+def save_to_sqlite(file,filename):    
     import sqlite3
-    
+    data=json.load(open(file,"r",encoding="utf-8"))
     num=3
-    import numpy as np
+    
     if(len(sys.argv)>2):
         random=int(sys.argv[2])
     else:
@@ -86,12 +84,12 @@ if __name__ == "__main__":
         )
         """
     )
- 
+
     material=data["material"]
     questions=data["questions"]
     options=data["options"]
     answers=data["answers"]
-    audio=open(f'output/listeningpassage/{filename}.wav', 'rb').read()
+    audio=open(f'output/listeningpassage/{filename}.mp3', 'rb').read()
     explanations=data["explanations"]
     cursor.execute(
         """
@@ -102,3 +100,14 @@ if __name__ == "__main__":
     )
     open(os.path.join(prefix,"readme.txt"),"w",encoding="utf-8").write(filename)
     db.commit()
+    
+if __name__ == "__main__":
+    prefix="data/listeningpassage"
+    filename=sys.argv[1]
+    import os
+    file=os.path.join(prefix,filename)
+    
+    # tts(file,filename)
+    save_to_sqlite(file,filename)
+    
+   

@@ -1,0 +1,12 @@
+Provide 30 paraphrases, each with 4 single-word options, where one word corresponds to the paraphrase and the others do not. The words should be common but not as basic as "book" or "apple." Each paraphrase should be 8-15 words long and offer a clear interpretation of the correct word.
+
+The response should be in this JSON format:
+
+[{
+    "question": "",
+    "options": [],
+    "answer": ""
+}]
+
+The correct answer should be represented as 0, 1, 2, or 3 and uniformly distributed. The question must be a paraphrase of the correct word and should not include any pronouns like "he" or "she."
+the word can be nouns,verbs,abjectives,and so no, not limited to just nouns.

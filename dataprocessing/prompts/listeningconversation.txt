@@ -1,0 +1,13 @@
+Generate a TOEFL-level listening conversation, followed by 3 questions, each with 4 answer options.
+ Provide the correct answer for each question, along with explanations. 
+ Format the response as JSON in the following structure:
+ {
+    "material": ["first speaker's text", "second speaker's text", "first speaker's text", ...],
+    "questions": [],
+    "options": [[]],
+    "answers": [],
+    "explanations": []
+}
+In the material, arabic numeral should not be included, use english words instead.
+Answers should be represented by 0, 1, 2, or 3 and should be uniformly distributed.
+No need to include phrases like "A said" or "B said," and avoid using option labels (A, B, C, D). Just provide the plain text of the conversation.

@@ -1,0 +1,14 @@
+Generate 1 text suitable for TOEFL listening comprehension,
+followed by 3 questions, each with 4 answer choices.
+Provide the correct answer for each question, 
+along with explanations. Format the response in the following JSON structure:
+{
+    "material": "",
+    "questions": [],
+    "options": [[]],
+    "answers": [],
+    "explanations": []
+}
+In the material, arabic numeral should not be included, use english words instead.
+Answers should be represented by 0, 1, 2, or 3 and uniformly distributed.
+Just provide the plain text of the conversation. and avoid using option labels (A, B, C, D)

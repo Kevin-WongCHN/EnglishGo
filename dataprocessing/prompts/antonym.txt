@@ -1,0 +1,13 @@
+Help me generate 30 questions, each containing a word or phrase,
+along with 4 options where one option is the antonym of the word or phrase. 
+The question should be a single word or phrase,
+and the words/phrases should focus on the essential vocabulary from the TOEFL test
+Format the output in the following structure:
+[
+    {"question": "", "options": [], "answer": ""},
+    {"question": "", "options": [], "answer": ""},
+    {"question": "", "options": [], "answer": ""},
+    {"question": "", "options": [], "answer": ""},
+    {"question": "", "options": [], "answer": ""}
+]
+Answers should be represented by 0, 1, 2, or 3 and uniformly distributed.
